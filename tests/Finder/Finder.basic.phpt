@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Test: Nette\Finder basic usage.
+ * Test: Nette\Utils\Finder basic usage.
  *
  * @author     David Grudl
- * @package    Nette
+ * @package    Nette\Utils
  * @subpackage UnitTests
  */
 
