@@ -60,7 +60,7 @@ class RecursiveCallbackFilterIterator extends \FilterIterator implements \Recurs
 
 	function getChildren()
 	{
-		return new self($this->getInnerIterator()->getChildren(), $this->callback, $this->childrenCallback);
+		return new static($this->getInnerIterator()->getChildren(), $this->callback, $this->childrenCallback);
 	}
 
 }
