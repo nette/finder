@@ -16,51 +16,35 @@ use Nette;
 
 
 /**
- * Callback recursive iterator filter.
+ * RecursiveCallbackFilterIterator for PHP < 5.4.
  *
  * @author     David Grudl
  */
-class RecursiveCallbackFilterIterator extends \FilterIterator implements \RecursiveIterator
+class RecursiveCallbackFilterIterator extends CallbackFilterIterator implements \RecursiveIterator
 {
-	/** @var callable */
-	private $callback;
-
-	/** @var callable */
-	private $childrenCallback;
-
 
 	/**
 	 * Constructs a filter around another iterator.
 	 * @param
 	 * @param  callable
 	 */
-	public function __construct(\RecursiveIterator $iterator, $callback, $childrenCallback = NULL)
+	public function __construct(\RecursiveIterator $iterator, $callback)
 	{
-		parent::__construct($iterator);
-		$this->callback = $callback;
-		$this->childrenCallback = $childrenCallback;
-	}
-
-
-
-	public function accept()
-	{
-		return $this->callback === NULL || call_user_func($this->callback, $this);
+		parent::__construct($iterator, $callback);
 	}
 
 
 
 	public function hasChildren()
 	{
-		return $this->getInnerIterator()->hasChildren()
-			&& ($this->childrenCallback === NULL || call_user_func($this->childrenCallback, $this));
+		return $this->getInnerIterator()->hasChildren();
 	}
 
 
 
 	public function getChildren()
 	{
-		return new static($this->getInnerIterator()->getChildren(), $this->callback, $this->childrenCallback);
+		return new static($this->getInnerIterator()->getChildren(), $this->callback);
 	}
 
 }
