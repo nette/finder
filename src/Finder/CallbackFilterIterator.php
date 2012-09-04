@@ -26,11 +26,6 @@ class CallbackFilterIterator extends \FilterIterator
 	protected $callback;
 
 
-	/**
-	 * Constructs a filter around another iterator.
-	 * @param
-	 * @param  callable
-	 */
 	public function __construct(\Iterator $iterator, $callback)
 	{
 		parent::__construct($iterator);
