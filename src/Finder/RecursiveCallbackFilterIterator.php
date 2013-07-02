@@ -14,7 +14,6 @@ namespace Nette\Utils;
 use Nette;
 
 
-
 /**
  * RecursiveCallbackFilterIterator for PHP < 5.4.
  *
@@ -29,12 +28,10 @@ class RecursiveCallbackFilterIterator extends CallbackFilterIterator implements 
 	}
 
 
-
 	public function hasChildren()
 	{
 		return $this->getInnerIterator()->hasChildren();
 	}
-
 
 
 	public function getChildren()
