@@ -9,7 +9,7 @@
  * @phpversion 5.3
  */
 
-use Nette\Finder;
+use Nette\Utils\Finder;
 
 
 

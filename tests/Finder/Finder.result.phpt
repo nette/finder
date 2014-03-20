@@ -8,7 +8,7 @@
  * @subpackage UnitTests
  */
 
-use Nette\Finder;
+use Nette\Utils\Finder;
 
 
 

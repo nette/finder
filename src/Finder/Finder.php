@@ -9,7 +9,7 @@
  * the file license.txt that was distributed with this source code.
  */
 
-namespace Nette;
+namespace Nette\Utils;
 
 use Nette,
 	RecursiveIteratorIterator;
@@ -28,7 +28,7 @@ use Nette,
  *
  * @author     David Grudl
  */
-class Finder extends Object implements \IteratorAggregate
+class Finder extends Nette\Object implements \IteratorAggregate
 {
 	/** @var array */
 	private $paths = array();
@@ -368,7 +368,7 @@ class Finder extends Object implements \IteratorAggregate
 			list(, $operator, $date) = $matches;
 			$operator = $operator ? $operator : '=';
 		}
-		$date = DateTime::from($date)->format('U');
+		$date = Nette\DateTime::from($date)->format('U');
 		return $this->filter(function($file) use ($operator, $date) {
 			return Finder::compare($file->getMTime(), $operator, $date);
 		});
