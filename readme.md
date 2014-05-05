@@ -2,7 +2,7 @@ Nette Finder: Files Searching
 =============================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/finder.svg)](https://packagist.org/packages/nette/finder)
-[![Build Status](https://travis-ci.org/nette/finder.svg?branch=master)](https://travis-ci.org/nette/finder)
+[![Build Status](https://travis-ci.org/nette/finder.svg?branch=v2.2)](https://travis-ci.org/nette/finder)
 
 Class `Nette\Utils\Finder` makes browsing the directory structure really easy.
 
