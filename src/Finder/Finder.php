@@ -24,7 +24,7 @@ use Nette,
  *
  * @author     David Grudl
  */
-class Finder extends Nette\Object implements \IteratorAggregate
+class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 {
 	/** @var array */
 	private $paths = array();
@@ -185,6 +185,16 @@ class Finder extends Nette\Object implements \IteratorAggregate
 
 
 	/********************* iterator generator ****************d*g**/
+
+
+	/**
+	 * Get the number of found files and/or directories.
+	 * @return int
+	 */
+	public function count()
+	{
+		return iterator_count($this->getIterator());
+	}
 
 
 	/**

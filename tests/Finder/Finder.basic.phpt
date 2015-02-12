@@ -20,6 +20,12 @@ function export($iterator)
 }
 
 
+test(function() { // count the results
+	$finder = Finder::findFiles('file.txt')->in('files');
+	Assert::count(1, $finder);
+});
+
+
 test(function() { // non-recursive file search
 	$finder = Finder::findFiles('file.txt')->in('files');
 	Assert::same(array('files/file.txt'), export($finder));
