@@ -232,8 +232,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 
 		if ($this->exclude) {
 			$filters = $this->exclude;
-			$iterator = new RecursiveCallbackFilterIterator($iterator, function($foo, $bar, RecursiveCallbackFilterIterator $iterator) use ($filters) {
-				$file = $iterator->getInnerIterator();
+			$iterator = new \RecursiveCallbackFilterIterator($iterator, function($foo, $bar, \RecursiveDirectoryIterator $file) use ($filters) {
 				if (!$file->isDot() && !$file->isFile()) {
 					foreach ($filters as $filter) {
 						if (!call_user_func($filter, $file)) {
@@ -252,10 +251,10 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 
 		if ($this->groups) {
 			$groups = $this->groups;
-			$iterator = new CallbackFilterIterator($iterator, function($foo, $bar, CallbackFilterIterator $file) use ($groups) {
-				do {
+			$iterator = new \CallbackFilterIterator($iterator, function($foo, $bar, \Iterator $file) use ($groups) {
+				while ($file instanceof \OuterIterator) {
 					$file = $file->getInnerIterator();
-				} while (!$file instanceof FilesystemIterator);
+				}
 
 				foreach ($groups as $filters) {
 					foreach ($filters as $filter) {
@@ -339,7 +338,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 			$operator = $operator ? $operator : '=';
 		}
 		return $this->filter(function(FilesystemIterator $file) use ($operator, $size) {
-			return Finder::compare($file->getSize(), $operator, $size);
+			return self::compare($file->getSize(), $operator, $size);
 		});
 	}
 
@@ -361,7 +360,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 		}
 		$date = DateTime::from($date)->format('U');
 		return $this->filter(function(FilesystemIterator $file) use ($operator, $date) {
-			return Finder::compare($file->getMTime(), $operator, $date);
+			return self::compare($file->getMTime(), $operator, $date);
 		});
 	}
 
