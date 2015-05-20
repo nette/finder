@@ -13,7 +13,7 @@ require __DIR__ . '/../bootstrap.php';
 
 function export($iterator)
 {
-	$arr = array();
+	$arr = [];
 	foreach ($iterator as $key => $value) $arr[] = strtr($key, '\\', '/');
 	sort($arr);
 	return $arr;
@@ -22,38 +22,38 @@ function export($iterator)
 
 test(function() { // size filter
 	$finder = Finder::findFiles('*')->size('>8kB')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/images/logo.gif',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() {
 	$finder = Finder::findFiles('*')->size('> 10')->size('< 100b')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/file.txt',
 		'files/subdir/file.txt',
 		'files/subdir/readme',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() {
 	$finder = Finder::find('*')->size('>', 10)->size('< 100b')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/file.txt',
 		'files/images',
 		'files/subdir',
 		'files/subdir/file.txt',
 		'files/subdir/readme',
 		'files/subdir/subdir2',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // date filter
 	$finder = Finder::findFiles('*')->date('> 2020-01-02')->from('files');
-	Assert::same(array(), export($finder));
+	Assert::same([], export($finder));
 });
 
 
@@ -68,7 +68,7 @@ test(function() { // custom filters
 
 test(function() {
 	$finder = Finder::findFiles('*')->length(6)->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/readme',
-	), export($finder));
+	], export($finder));
 });

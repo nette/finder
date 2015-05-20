@@ -13,7 +13,7 @@ require __DIR__ . '/../bootstrap.php';
 
 function export($iterator)
 {
-	$arr = array();
+	$arr = [];
 	foreach ($iterator as $key => $value) $arr[] = strtr($key, '\\', '/');
 	sort($arr);
 	return $arr;
@@ -22,17 +22,17 @@ function export($iterator)
 
 test(function() { // recursive
 	$finder = Finder::find('*')->from('files/subdir/subdir2', 'files/images');
-	Assert::same(array(
+	Assert::same([
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 
 
-	$finder = Finder::find('*')->from(array('files/subdir/subdir2', 'files/images'));
-	Assert::same(array(
+	$finder = Finder::find('*')->from(['files/subdir/subdir2', 'files/images']);
+	Assert::same([
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 
 	Assert::exception(function() {
 		Finder::find('*')->from('files/subdir/subdir2')->from('files/images');
@@ -42,17 +42,17 @@ test(function() { // recursive
 
 test(function() { // non-recursive
 	$finder = Finder::find('*')->in('files/subdir/subdir2', 'files/images');
-	Assert::same(array(
+	Assert::same([
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 
 
-	$finder = Finder::find('*')->in(array('files/subdir/subdir2', 'files/images'));
-	Assert::same(array(
+	$finder = Finder::find('*')->in(['files/subdir/subdir2', 'files/images']);
+	Assert::same([
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 
 	Assert::exception(function() {
 		Finder::find('*')->in('files/subdir/subdir2')->in('files/images');

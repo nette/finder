@@ -13,7 +13,7 @@ require __DIR__ . '/../bootstrap.php';
 
 function export($iterator)
 {
-	$arr = array();
+	$arr = [];
 	foreach ($iterator as $key => $value) $arr[] = strtr($key, '\\', '/');
 	sort($arr);
 	return $arr;
@@ -22,110 +22,110 @@ function export($iterator)
 
 test(function() { // multiple mask
 	$finder = Finder::findFiles('*.txt', '*.gif')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/file.txt',
 		'files/images/logo.gif',
 		'files/subdir/file.txt',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() {
-	$finder = Finder::findFiles(array('*.txt', '*.gif'))->from('files');
-	Assert::same(array(
+	$finder = Finder::findFiles(['*.txt', '*.gif'])->from('files');
+	Assert::same([
 		'files/file.txt',
 		'files/images/logo.gif',
 		'files/subdir/file.txt',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // * mask
 	$finder = Finder::findFiles('*.txt', '*')->in('files/subdir');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/file.txt',
 		'files/subdir/readme',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // *.* mask
 	$finder = Finder::findFiles('*.*')->in('files/subdir');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 // subdir excluding mask
 $finder = Finder::findFiles('*')->exclude('*i*/*')->from('files');
-Assert::same(array(
+Assert::same([
 	'files/file.txt',
-), export($finder));
+], export($finder));
 
 
 test(function() { // subdir mask
 	$finder = Finder::findFiles('*/*2/*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // excluding mask
 	$finder = Finder::findFiles('*')->exclude('*i*')->in('files/subdir');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/readme',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // subdir excluding mask
 	$finder = Finder::findFiles('*')->exclude('*i*/*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // complex mask
 	$finder = Finder::findFiles('*[efd][a-z][!a-r]*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/images/logo.gif',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() {
 	$finder = Finder::findFiles('*2*/fi??.*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // anchored
 	$finder = Finder::findFiles('/f*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() {
 	$finder = Finder::findFiles('/*/f*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/file.txt',
-	), export($finder));
+	], export($finder));
 });
 
 
 test(function() { // multidirs mask
 	$finder = Finder::findFiles('/**/f*')->from('files');
-	Assert::same(array(
+	Assert::same([
 		'files/subdir/file.txt',
 		'files/subdir/subdir2/file.txt',
-	), export($finder));
+	], export($finder));
 });

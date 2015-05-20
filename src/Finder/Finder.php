@@ -27,13 +27,13 @@ use Nette,
 class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 {
 	/** @var array */
-	private $paths = array();
+	private $paths = [];
 
 	/** @var array of filters */
 	private $groups;
 
 	/** @var filter for recursive traversing */
-	private $exclude = array();
+	private $exclude = [];
 
 	/** @var int */
 	private $order = RecursiveIteratorIterator::SELF_FIRST;
@@ -163,7 +163,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 */
 	private static function buildPattern($masks)
 	{
-		$pattern = array();
+		$pattern = [];
 		foreach ($masks as $mask) {
 			$mask = rtrim(strtr($mask, '\\', '/'), '/');
 			$prefix = '';
@@ -178,7 +178,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 				$prefix = '(?<=^/)';
 			}
 			$pattern[] = $prefix . strtr(preg_quote($mask, '#'),
-				array('\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-'));
+				['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
 		}
 		return $pattern ? '#/(' . implode('|', $pattern) . ')\z#i' : NULL;
 	}
@@ -211,7 +211,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 
 		} else {
 			$iterator = new \AppendIterator();
-			$iterator->append($workaround = new \ArrayIterator(array('workaround PHP bugs #49104, #63077')));
+			$iterator->append($workaround = new \ArrayIterator(['workaround PHP bugs #49104, #63077']));
 			foreach ($this->paths as $path) {
 				$iterator->append($this->buildIterator($path));
 			}
@@ -334,7 +334,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 				throw new Nette\InvalidArgumentException('Invalid size predicate format.');
 			}
 			list(, $operator, $size, $unit) = $matches;
-			static $units = array('' => 1, 'k' => 1e3, 'm' => 1e6, 'g' => 1e9);
+			static $units = ['' => 1, 'k' => 1e3, 'm' => 1e6, 'g' => 1e9];
 			$size *= $units[strtolower($unit)];
 			$operator = $operator ? $operator : '=';
 		}
