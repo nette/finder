@@ -48,7 +48,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask and all directories.
 	 * @param  mixed
-	 * @return Finder
+	 * @return self
 	 */
 	public static function find($mask)
 	{
@@ -63,7 +63,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask.
 	 * @param  mixed
-	 * @return Finder
+	 * @return self
 	 */
 	public static function findFiles($mask)
 	{
@@ -78,7 +78,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for directories matching mask.
 	 * @param  mixed
-	 * @return Finder
+	 * @return self
 	 */
 	public static function findDirectories($mask)
 	{
