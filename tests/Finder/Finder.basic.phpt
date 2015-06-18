@@ -4,8 +4,8 @@
  * Test: Nette\Utils\Finder basic usage.
  */
 
-use Nette\Utils\Finder,
-	Tester\Assert;
+use Nette\Utils\Finder;
+use Tester\Assert;
 
 
 require __DIR__ . '/../bootstrap.php';
@@ -14,25 +14,27 @@ require __DIR__ . '/../bootstrap.php';
 function export($iterator)
 {
 	$arr = array();
-	foreach ($iterator as $key => $value) $arr[] = strtr($key, '\\', '/');
+	foreach ($iterator as $key => $value) {
+		$arr[] = strtr($key, '\\', '/');
+	}
 	sort($arr);
 	return $arr;
 }
 
 
-test(function() { // count the results
+test(function () { // count the results
 	$finder = Finder::findFiles('file.txt')->in('files');
 	Assert::count(1, $finder);
 });
 
 
-test(function() { // non-recursive file search
+test(function () { // non-recursive file search
 	$finder = Finder::findFiles('file.txt')->in('files');
 	Assert::same(array('files/file.txt'), export($finder));
 });
 
 
-test(function() { // recursive file search
+test(function () { // recursive file search
 	$finder = Finder::findFiles('file.txt')->from('files');
 	Assert::same(array(
 		'files/file.txt',
@@ -42,7 +44,7 @@ test(function() { // recursive file search
 });
 
 
-test(function() { // recursive file search with depth limit
+test(function () { // recursive file search with depth limit
 	$finder = Finder::findFiles('file.txt')->from('files')->limitDepth(1);
 	Assert::same(array(
 		'files/file.txt',
@@ -51,7 +53,7 @@ test(function() { // recursive file search with depth limit
 });
 
 
-test(function() { // non-recursive file & directory search
+test(function () { // non-recursive file & directory search
 	$finder = Finder::find('file.txt')->in('files');
 	Assert::same(array(
 		'files/file.txt',
@@ -59,7 +61,7 @@ test(function() { // non-recursive file & directory search
 });
 
 
-test(function() { // recursive file & directory search
+test(function () { // recursive file & directory search
 	$finder = Finder::find('file.txt')->from('files');
 	Assert::same(array(
 		'files/file.txt',
@@ -69,7 +71,7 @@ test(function() { // recursive file & directory search
 });
 
 
-test(function() { // recursive file & directory search in child-first order
+test(function () { // recursive file & directory search in child-first order
 	$finder = Finder::find('file.txt')->from('files')->childFirst();
 	Assert::same(array(
 		'files/file.txt',
@@ -79,7 +81,7 @@ test(function() { // recursive file & directory search in child-first order
 });
 
 
-test(function() { // recursive file & directory search excluding folders
+test(function () { // recursive file & directory search excluding folders
 	$finder = Finder::find('file.txt')->from('files')->exclude('images')->exclude('subdir2', '*.txt');
 	Assert::same(array(
 		'files/file.txt',
@@ -88,7 +90,7 @@ test(function() { // recursive file & directory search excluding folders
 });
 
 
-test(function() { // non-recursive directory search
+test(function () { // non-recursive directory search
 	$finder = Finder::findDirectories('subdir*')->in('files');
 	Assert::same(array(
 		'files/subdir',
@@ -96,7 +98,7 @@ test(function() { // non-recursive directory search
 });
 
 
-test(function() { // recursive directory search
+test(function () { // recursive directory search
 	$finder = Finder::findDirectories('subdir*')->from('files');
 	Assert::same(array(
 		'files/subdir',
