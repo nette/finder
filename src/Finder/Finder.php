@@ -31,7 +31,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 	/** @var array of filters */
 	private $groups;
 
-	/** @var filter for recursive traversing */
+	/** @var array filter for recursive traversing */
 	private $exclude = array();
 
 	/** @var int */
