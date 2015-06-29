@@ -21,8 +21,6 @@ use RecursiveIteratorIterator;
  *     ->from('.')
  *     ->exclude('temp');
  * </code>
- *
- * @author     David Grudl
  */
 class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 {
