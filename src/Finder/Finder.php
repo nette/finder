@@ -48,13 +48,9 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return self
 	 */
-	public static function find($mask)
+	public static function find(...$masks)
 	{
-		if (!is_array($mask)) {
-			$mask = func_get_args();
-		}
-		$finder = new static;
-		return $finder->select($mask, 'isDir')->select($mask, 'isFile');
+		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isDir')->select($masks, 'isFile');
 	}
 
 
@@ -63,13 +59,9 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return self
 	 */
-	public static function findFiles($mask)
+	public static function findFiles(...$masks)
 	{
-		if (!is_array($mask)) {
-			$mask = func_get_args();
-		}
-		$finder = new static;
-		return $finder->select($mask, 'isFile');
+		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isFile');
 	}
 
 
@@ -78,13 +70,9 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return self
 	 */
-	public static function findDirectories($mask)
+	public static function findDirectories(...$masks)
 	{
-		if (!is_array($mask)) {
-			$mask = func_get_args();
-		}
-		$finder = new static;
-		return $finder->select($mask, 'isDir');
+		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isDir');
 	}
 
 
@@ -114,13 +102,10 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  string|array
 	 * @return self
 	 */
-	public function in($path)
+	public function in(...$paths)
 	{
-		if (!is_array($path)) {
-			$path = func_get_args();
-		}
 		$this->maxDepth = 0;
-		return $this->from($path);
+		return $this->from(is_array($paths[0]) ? $paths[0] : $paths);
 	}
 
 
@@ -129,15 +114,12 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  string|array
 	 * @return self
 	 */
-	public function from($path)
+	public function from(...$paths)
 	{
 		if ($this->paths) {
 			throw new Nette\InvalidStateException('Directory to search has already been specified.');
 		}
-		if (!is_array($path)) {
-			$path = func_get_args();
-		}
-		$this->paths = $path;
+		$this->paths = is_array($paths[0]) ? $paths[0] : $paths;
 		$this->cursor = & $this->exclude;
 		return $this;
 	}
@@ -279,12 +261,9 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return self
 	 */
-	public function exclude($masks)
+	public function exclude(...$masks)
 	{
-		if (!is_array($masks)) {
-			$masks = func_get_args();
-		}
-		$pattern = self::buildPattern($masks);
+		$pattern = self::buildPattern(is_array($masks[0]) ? $masks[0] : $masks);
 		if ($pattern) {
 			$this->filter(function (FilesystemIterator $file) use ($pattern) {
 				return !preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/'));
