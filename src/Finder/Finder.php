@@ -108,7 +108,7 @@ class Finder implements \IteratorAggregate, \Countable
 	public function in(...$paths)
 	{
 		$this->maxDepth = 0;
-		return $this->from(is_array($paths[0]) ? $paths[0] : $paths);
+		return $this->from(...$paths);
 	}
 
 
