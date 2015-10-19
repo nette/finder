@@ -211,10 +211,9 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 		$iterator = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
 
 		if ($this->exclude) {
-			$filters = $this->exclude;
-			$iterator = new \RecursiveCallbackFilterIterator($iterator, function ($foo, $bar, \RecursiveDirectoryIterator $file) use ($filters) {
+			$iterator = new \RecursiveCallbackFilterIterator($iterator, function ($foo, $bar, \RecursiveDirectoryIterator $file) {
 				if (!$file->isDot() && !$file->isFile()) {
-					foreach ($filters as $filter) {
+					foreach ($this->exclude as $filter) {
 						if (!call_user_func($filter, $file)) {
 							return FALSE;
 						}
@@ -230,13 +229,12 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 		}
 
 		if ($this->groups) {
-			$groups = $this->groups;
-			$iterator = new \CallbackFilterIterator($iterator, function ($foo, $bar, \Iterator $file) use ($groups) {
+			$iterator = new \CallbackFilterIterator($iterator, function ($foo, $bar, \Iterator $file) {
 				while ($file instanceof \OuterIterator) {
 					$file = $file->getInnerIterator();
 				}
 
-				foreach ($groups as $filters) {
+				foreach ($this->groups as $filters) {
 					foreach ($filters as $filter) {
 						if (!call_user_func($filter, $file)) {
 							continue 2;
