@@ -105,3 +105,15 @@ test(function () { // recursive directory search
 		'files/subdir/subdir2',
 	], export($finder));
 });
+
+
+test(function () { // getSubPathName
+	$res = [];
+	foreach ($iterator = Finder::findFiles('file.txt')->from('files')->getIterator() as $foo) {
+		$res[$iterator->getSubPathName()] = TRUE;
+	}
+	Assert::same(
+		['file.txt', 'subdir/file.txt', 'subdir/subdir2/file.txt'],
+		export($res)
+	);
+});
