@@ -8,7 +8,7 @@
 namespace Nette\Utils;
 
 use Nette;
-use FilesystemIterator;
+use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 
@@ -87,7 +87,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 		$this->cursor = & $this->groups[];
 		$pattern = self::buildPattern($masks);
 		if ($type || $pattern) {
-			$this->filter(function (FilesystemIterator $file) use ($type, $pattern) {
+			$this->filter(function (RecursiveDirectoryIterator $file) use ($type, $pattern) {
 				return !$file->isDot()
 					&& (!$type || $file->$type())
 					&& (!$pattern || preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/')));
@@ -208,10 +208,10 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 */
 	private function buildIterator($path)
 	{
-		$iterator = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
+		$iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
 
 		if ($this->exclude) {
-			$iterator = new \RecursiveCallbackFilterIterator($iterator, function ($foo, $bar, \RecursiveDirectoryIterator $file) {
+			$iterator = new \RecursiveCallbackFilterIterator($iterator, function ($foo, $bar, RecursiveDirectoryIterator $file) {
 				if (!$file->isDot() && !$file->isFile()) {
 					foreach ($this->exclude as $filter) {
 						if (!call_user_func($filter, $file)) {
@@ -263,7 +263,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	{
 		$pattern = self::buildPattern(is_array($masks[0]) ? $masks[0] : $masks);
 		if ($pattern) {
-			$this->filter(function (FilesystemIterator $file) use ($pattern) {
+			$this->filter(function (RecursiveDirectoryIterator $file) use ($pattern) {
 				return !preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/'));
 			});
 		}
@@ -273,7 +273,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 
 	/**
 	 * Restricts the search using callback.
-	 * @param  callable  function (FilesystemIterator $file)
+	 * @param  callable  function (RecursiveDirectoryIterator $file)
 	 * @return self
 	 */
 	public function filter($callback)
@@ -312,7 +312,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 			$size *= $units[strtolower($unit)];
 			$operator = $operator ? $operator : '=';
 		}
-		return $this->filter(function (FilesystemIterator $file) use ($operator, $size) {
+		return $this->filter(function (RecursiveDirectoryIterator $file) use ($operator, $size) {
 			return self::compare($file->getSize(), $operator, $size);
 		});
 	}
@@ -334,7 +334,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 			$operator = $operator ? $operator : '=';
 		}
 		$date = DateTime::from($date)->format('U');
-		return $this->filter(function (FilesystemIterator $file) use ($operator, $date) {
+		return $this->filter(function (RecursiveDirectoryIterator $file) use ($operator, $date) {
 			return self::compare($file->getMTime(), $operator, $date);
 		});
 	}
