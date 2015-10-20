@@ -50,7 +50,8 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 */
 	public static function find(...$masks)
 	{
-		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isDir')->select($masks, 'isFile');
+		$masks = is_array($masks[0]) ? $masks[0] : $masks;
+		return (new static)->select($masks, 'isDir')->select($masks, 'isFile');
 	}
 
 
