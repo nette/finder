@@ -229,23 +229,21 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 			$iterator->setMaxDepth($this->maxDepth);
 		}
 
-		if ($this->groups) {
-			$iterator = new \CallbackFilterIterator($iterator, function ($foo, $bar, \Iterator $file) {
-				while ($file instanceof \OuterIterator) {
-					$file = $file->getInnerIterator();
-				}
+		$iterator = new \CallbackFilterIterator($iterator, function ($foo, $bar, \Iterator $file) {
+			while ($file instanceof \OuterIterator) {
+				$file = $file->getInnerIterator();
+			}
 
-				foreach ($this->groups as $filters) {
-					foreach ($filters as $filter) {
-						if (!call_user_func($filter, $file)) {
-							continue 2;
-						}
+			foreach ($this->groups as $filters) {
+				foreach ($filters as $filter) {
+					if (!call_user_func($filter, $file)) {
+						continue 2;
 					}
-					return TRUE;
 				}
-				return FALSE;
-			});
-		}
+				return TRUE;
+			}
+			return FALSE;
+		});
 
 		return $iterator;
 	}
