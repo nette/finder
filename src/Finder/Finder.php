@@ -22,8 +22,10 @@ use RecursiveIteratorIterator;
  *     ->exclude('temp');
  * </code>
  */
-class Finder extends Nette\Object implements \IteratorAggregate, \Countable
+class Finder implements \IteratorAggregate, \Countable
 {
+	use Nette\SmartObject;
+
 	/** @var array */
 	private $paths = [];
 
