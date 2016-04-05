@@ -368,4 +368,22 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 		}
 	}
 
+
+	/********************* extension methods ****************d*g**/
+
+
+	public function __call($name, $args)
+	{
+		if ($callback = Nette\Utils\ObjectMixin::getExtensionMethod(__CLASS__, $name)) {
+			return $callback($this, ...$args);
+		}
+		Nette\Utils\ObjectMixin::strictCall(__CLASS__, $name);
+	}
+
+
+	public static function extensionMethod($name, $callback)
+	{
+		Nette\Utils\ObjectMixin::setExtensionMethod(__CLASS__, $name, $callback);
+	}
+
 }
