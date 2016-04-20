@@ -3,6 +3,7 @@ Nette Finder: Files Searching
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/finder.svg)](https://packagist.org/packages/nette/finder)
 [![Build Status](https://travis-ci.org/nette/finder.svg?branch=master)](https://travis-ci.org/nette/finder)
+[![Coverage Status](https://coveralls.io/repos/github/nette/finder/badge.svg?branch=master)](https://coveralls.io/github/nette/finder?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/nette/finder/v/stable)](https://github.com/nette/finder/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/finder/blob/master/license.md)
 
