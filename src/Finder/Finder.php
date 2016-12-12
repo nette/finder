@@ -48,7 +48,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask and all directories.
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public static function find(...$masks)
 	{
@@ -60,7 +60,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask.
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public static function findFiles(...$masks)
 	{
@@ -71,7 +71,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for directories matching mask.
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public static function findDirectories(...$masks)
 	{
@@ -83,7 +83,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Creates filtering group by mask & type selector.
 	 * @param  array
 	 * @param  string
-	 * @return self
+	 * @return static
 	 */
 	private function select($masks, $type)
 	{
@@ -103,7 +103,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Searchs in the given folder(s).
 	 * @param  string|array
-	 * @return self
+	 * @return static
 	 */
 	public function in(...$paths)
 	{
@@ -115,7 +115,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Searchs recursively from the given folder(s).
 	 * @param  string|array
-	 * @return self
+	 * @return static
 	 */
 	public function from(...$paths)
 	{
@@ -130,7 +130,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Shows folder content prior to the folder.
-	 * @return self
+	 * @return static
 	 */
 	public function childFirst()
 	{
@@ -258,7 +258,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Restricts the search using mask.
 	 * Excludes directories from recursive traversing.
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public function exclude(...$masks)
 	{
@@ -275,7 +275,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Restricts the search using callback.
 	 * @param  callable  function (RecursiveDirectoryIterator $file)
-	 * @return self
+	 * @return static
 	 */
 	public function filter($callback)
 	{
@@ -287,7 +287,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Limits recursion level.
 	 * @param  int
-	 * @return self
+	 * @return static
 	 */
 	public function limitDepth($depth)
 	{
@@ -300,7 +300,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Restricts the search by size.
 	 * @param  string  "[operator] [size] [unit]" example: >=10kB
 	 * @param  int
-	 * @return self
+	 * @return static
 	 */
 	public function size($operator, $size = NULL)
 	{
@@ -323,7 +323,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Restricts the search by modified time.
 	 * @param  string  "[operator] [date]" example: >1978-01-23
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public function date($operator, $date = NULL)
 	{
