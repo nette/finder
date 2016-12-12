@@ -46,7 +46,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask and all directories.
 	 * @param  mixed
-	 * @return Finder
+	 * @return static
 	 */
 	public static function find($mask)
 	{
@@ -61,7 +61,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for files matching mask.
 	 * @param  mixed
-	 * @return Finder
+	 * @return static
 	 */
 	public static function findFiles($mask)
 	{
@@ -76,7 +76,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Begins search for directories matching mask.
 	 * @param  mixed
-	 * @return Finder
+	 * @return static
 	 */
 	public static function findDirectories($mask)
 	{
@@ -92,7 +92,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * Creates filtering group by mask & type selector.
 	 * @param  array
 	 * @param  string
-	 * @return self
+	 * @return static
 	 */
 	private function select($masks, $type)
 	{
@@ -112,7 +112,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Searchs in the given folder(s).
 	 * @param  string|array
-	 * @return self
+	 * @return static
 	 */
 	public function in($path)
 	{
@@ -127,7 +127,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Searchs recursively from the given folder(s).
 	 * @param  string|array
-	 * @return self
+	 * @return static
 	 */
 	public function from($path)
 	{
@@ -145,7 +145,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 
 	/**
 	 * Shows folder content prior to the folder.
-	 * @return self
+	 * @return static
 	 */
 	public function childFirst()
 	{
@@ -276,7 +276,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * Restricts the search using mask.
 	 * Excludes directories from recursive traversing.
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public function exclude($masks)
 	{
@@ -296,7 +296,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Restricts the search using callback.
 	 * @param  callable  function (RecursiveDirectoryIterator $file)
-	 * @return self
+	 * @return static
 	 */
 	public function filter($callback)
 	{
@@ -308,7 +308,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	/**
 	 * Limits recursion level.
 	 * @param  int
-	 * @return self
+	 * @return static
 	 */
 	public function limitDepth($depth)
 	{
@@ -321,7 +321,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * Restricts the search by size.
 	 * @param  string  "[operator] [size] [unit]" example: >=10kB
 	 * @param  int
-	 * @return self
+	 * @return static
 	 */
 	public function size($operator, $size = NULL)
 	{
@@ -344,7 +344,7 @@ class Finder extends Nette\Object implements \IteratorAggregate, \Countable
 	 * Restricts the search by modified time.
 	 * @param  string  "[operator] [date]" example: >1978-01-23
 	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public function date($operator, $date = NULL)
 	{
