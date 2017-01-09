@@ -87,7 +87,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	private function select($masks, $type)
 	{
-		$this->cursor = & $this->groups[];
+		$this->cursor = &$this->groups[];
 		$pattern = self::buildPattern($masks);
 		if ($type || $pattern) {
 			$this->filter(function (RecursiveDirectoryIterator $file) use ($type, $pattern) {
@@ -123,7 +123,7 @@ class Finder implements \IteratorAggregate, \Countable
 			throw new Nette\InvalidStateException('Directory to search has already been specified.');
 		}
 		$this->paths = is_array($paths[0]) ? $paths[0] : $paths;
-		$this->cursor = & $this->exclude;
+		$this->cursor = &$this->exclude;
 		return $this;
 	}
 
