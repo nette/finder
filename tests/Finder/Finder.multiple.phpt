@@ -4,6 +4,8 @@
  * Test: Nette\Utils\Finder multiple sources.
  */
 
+declare(strict_types=1);
+
 use Nette\Utils\Finder;
 use Tester\Assert;
 
