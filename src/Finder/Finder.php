@@ -219,7 +219,7 @@ class Finder implements \IteratorAggregate, \Countable
 			$iterator = new \RecursiveCallbackFilterIterator($iterator, function ($foo, $bar, RecursiveDirectoryIterator $file) {
 				if (!$file->isDot() && !$file->isFile()) {
 					foreach ($this->exclude as $filter) {
-						if (!call_user_func($filter, $file)) {
+						if (!$filter($file)) {
 							return FALSE;
 						}
 					}
@@ -240,7 +240,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 			foreach ($this->groups as $filters) {
 				foreach ($filters as $filter) {
-					if (!call_user_func($filter, $file)) {
+					if (!$filter($file)) {
 						continue 2;
 					}
 				}
