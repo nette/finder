@@ -30,7 +30,7 @@ class Finder implements \IteratorAggregate, \Countable
 	private $paths = [];
 
 	/** @var array of filters */
-	private $groups;
+	private $groups = [];
 
 	/** @var array filter for recursive traversing */
 	private $exclude = [];
@@ -142,7 +142,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Converts Finder pattern to regular expression.
 	 * @param  array
-	 * @return string
+	 * @return string|NULL
 	 */
 	private static function buildPattern($masks)
 	{
