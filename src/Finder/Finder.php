@@ -83,11 +83,9 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Creates filtering group by mask & type selector.
-	 * @param  array
-	 * @param  string
 	 * @return static
 	 */
-	private function select($masks, $type)
+	private function select(array $masks, string $type)
 	{
 		$this->cursor = &$this->groups[];
 		$pattern = self::buildPattern($masks);
@@ -143,10 +141,9 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Converts Finder pattern to regular expression.
-	 * @param  array
 	 * @return string|NULL
 	 */
-	private static function buildPattern($masks)
+	private static function buildPattern(array $masks)
 	{
 		$pattern = [];
 		foreach ($masks as $mask) {
@@ -174,9 +171,8 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Get the number of found files and/or directories.
-	 * @return int
 	 */
-	public function count()
+	public function count(): int
 	{
 		return iterator_count($this->getIterator());
 	}
@@ -184,21 +180,20 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Returns iterator.
-	 * @return \Iterator
 	 */
-	public function getIterator()
+	public function getIterator(): \Iterator
 	{
 		if (!$this->paths) {
 			throw new Nette\InvalidStateException('Call in() or from() to specify directory to search.');
 
 		} elseif (count($this->paths) === 1) {
-			return $this->buildIterator($this->paths[0]);
+			return $this->buildIterator((string) $this->paths[0]);
 
 		} else {
 			$iterator = new \AppendIterator();
 			$iterator->append($workaround = new \ArrayIterator(['workaround PHP bugs #49104, #63077']));
 			foreach ($this->paths as $path) {
-				$iterator->append($this->buildIterator($path));
+				$iterator->append($this->buildIterator((string) $path));
 			}
 			unset($workaround[0]);
 			return $iterator;
@@ -208,10 +203,8 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Returns per-path iterator.
-	 * @param  string
-	 * @return \Iterator
 	 */
-	private function buildIterator($path)
+	private function buildIterator(string $path): \Iterator
 	{
 		$iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
 
@@ -279,7 +272,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * @param  callable  function (RecursiveDirectoryIterator $file)
 	 * @return static
 	 */
-	public function filter($callback)
+	public function filter(callable $callback)
 	{
 		$this->cursor[] = $callback;
 		return $this;
@@ -288,10 +281,9 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Limits recursion level.
-	 * @param  int
 	 * @return static
 	 */
-	public function limitDepth($depth)
+	public function limitDepth(int $depth)
 	{
 		$this->maxDepth = $depth;
 		return $this;
@@ -301,10 +293,9 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Restricts the search by size.
 	 * @param  string  "[operator] [size] [unit]" example: >=10kB
-	 * @param  int
 	 * @return static
 	 */
-	public function size($operator, $size = NULL)
+	public function size(string $operator, int $size = NULL)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?\z#i', $operator, $matches)) {
@@ -327,7 +318,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return static
 	 */
-	public function date($operator, $date = NULL)
+	public function date(string $operator, $date = NULL)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)\z#i', $operator, $matches)) {
@@ -347,9 +338,8 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Compares two values.
 	 * @param  mixed
 	 * @param  mixed
-	 * @return bool
 	 */
-	public static function compare($l, $operator, $r)
+	public static function compare($l, $operator, $r): bool
 	{
 		switch ($operator) {
 			case '>':
@@ -376,7 +366,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/********************* extension methods ****************d*g**/
 
 
-	public function __call($name, $args)
+	public function __call(string $name, array $args)
 	{
 		if ($callback = Nette\Utils\ObjectMixin::getExtensionMethod(__CLASS__, $name)) {
 			return $callback($this, ...$args);
@@ -385,7 +375,7 @@ class Finder implements \IteratorAggregate, \Countable
 	}
 
 
-	public static function extensionMethod($name, $callback)
+	public static function extensionMethod(string $name, callable $callback)
 	{
 		Nette\Utils\ObjectMixin::setExtensionMethod(__CLASS__, $name, $callback);
 	}
