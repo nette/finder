@@ -28,6 +28,9 @@ class Finder implements \IteratorAggregate, \Countable
 {
 	use Nette\SmartObject;
 
+	/** @var callable  extension methods */
+	private static $extMethods = [];
+
 	/** @var array */
 	private $paths = [];
 
@@ -368,16 +371,15 @@ class Finder implements \IteratorAggregate, \Countable
 
 	public function __call(string $name, array $args)
 	{
-		if ($callback = Nette\Utils\ObjectMixin::getExtensionMethod(__CLASS__, $name)) {
-			return $callback($this, ...$args);
-		}
-		Nette\Utils\ObjectMixin::strictCall(__CLASS__, $name);
+		return isset(self::$extMethods[$name])
+			? (self::$extMethods[$name])($this, ...$args)
+			: parent::__call($name, $args);
 	}
 
 
 	public static function extensionMethod(string $name, callable $callback)
 	{
-		Nette\Utils\ObjectMixin::setExtensionMethod(__CLASS__, $name, $callback);
+		self::$extMethods[$name] = $callback;
 	}
 
 }
