@@ -24,6 +24,27 @@ function export($iterator)
 }
 
 
+test(function () {
+	Assert::exception(function () {
+		$finder = Finder::find();
+	}, Nette\InvalidArgumentException::class, "Argument 'masks' cannot be empty.");
+});
+
+
+test(function () {
+	Assert::exception(function () {
+		$finder = Finder::findDirectories();
+	}, Nette\InvalidArgumentException::class, "Argument 'masks' cannot be empty.");
+});
+
+
+test(function () {
+	Assert::exception(function () {
+		$finder = Finder::findFiles();
+	}, Nette\InvalidArgumentException::class, "Argument 'masks' cannot be empty.");
+});
+
+
 test(function () { // multiple mask
 	$finder = Finder::findFiles('*.txt', '*.gif')->from('files');
 	Assert::same([

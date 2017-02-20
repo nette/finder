@@ -54,9 +54,13 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Begins search for files matching mask and all directories.
 	 * @param  mixed
 	 * @return static
+	 * @throws Nette\InvalidArgumentException  when argument $masks is empty
 	 */
 	public static function find(...$masks)
 	{
+		if (empty($masks)) {
+			throw new Nette\InvalidArgumentException("Argument 'masks' cannot be empty.");
+		}
 		$masks = is_array($masks[0]) ? $masks[0] : $masks;
 		return (new static)->select($masks, 'isDir')->select($masks, 'isFile');
 	}
@@ -66,9 +70,13 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Begins search for files matching mask.
 	 * @param  mixed
 	 * @return static
+	 * @throws Nette\InvalidArgumentException  when argument $masks is empty
 	 */
 	public static function findFiles(...$masks)
 	{
+		if (empty($masks)) {
+			throw new Nette\InvalidArgumentException("Argument 'masks' cannot be empty.");
+		}
 		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isFile');
 	}
 
@@ -77,9 +85,13 @@ class Finder implements \IteratorAggregate, \Countable
 	 * Begins search for directories matching mask.
 	 * @param  mixed
 	 * @return static
+	 * @throws Nette\InvalidArgumentException  when argument $masks is empty
 	 */
 	public static function findDirectories(...$masks)
 	{
+		if (empty($masks)) {
+			throw new Nette\InvalidArgumentException("Argument 'masks' cannot be empty.");
+		}
 		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isDir');
 	}
 
