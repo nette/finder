@@ -57,7 +57,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function find(...$masks)
 	{
-		$masks = is_array($masks[0]) ? $masks[0] : $masks;
+		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
 		return (new static)->select($masks, 'isDir')->select($masks, 'isFile');
 	}
 
@@ -69,7 +69,8 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function findFiles(...$masks)
 	{
-		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isFile');
+		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		return (new static)->select($masks, 'isFile');
 	}
 
 
@@ -80,7 +81,8 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function findDirectories(...$masks)
 	{
-		return (new static)->select(is_array($masks[0]) ? $masks[0] : $masks, 'isDir');
+		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		return (new static)->select($masks, 'isDir');
 	}
 
 
@@ -260,7 +262,8 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public function exclude(...$masks)
 	{
-		$pattern = self::buildPattern(is_array($masks[0]) ? $masks[0] : $masks);
+		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		$pattern = self::buildPattern($masks);
 		if ($pattern) {
 			$this->filter(function (RecursiveDirectoryIterator $file) use ($pattern) {
 				return !preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/'));
