@@ -117,3 +117,31 @@ test(function () { // getSubPathName
 		export($res)
 	);
 });
+
+
+test(function () { // empty args
+	$finder = Finder::find()->in('files');
+	Assert::same([
+		'files/file.txt',
+		'files/images',
+		'files/subdir',
+	], export($finder));
+
+	$finder = Finder::findFiles()->in('files');
+	Assert::same([
+		'files/file.txt',
+	], export($finder));
+
+	$finder = Finder::findDirectories()->in('files');
+	Assert::same([
+		'files/images',
+		'files/subdir',
+	], export($finder));
+
+	$finder = Finder::find()->exclude()->in('files');
+	Assert::same([
+		'files/file.txt',
+		'files/images',
+		'files/subdir',
+	], export($finder));
+});
