@@ -390,5 +390,4 @@ class Finder implements \IteratorAggregate, \Countable
 	{
 		Nette\Utils\ObjectMixin::setExtensionMethod(__CLASS__, $name, $callback);
 	}
-
 }
