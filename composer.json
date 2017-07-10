@@ -1,6 +1,6 @@
 {
 	"name": "nette/finder",
-	"description": "🔍 Finder: find files and directories with an intuitive API.",
+	"description": "🔍 Nette Finder: find files and directories with an intuitive API.",
 	"keywords": ["nette", "filesystem", "iterator", "glob"],
 	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
