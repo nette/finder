@@ -7,7 +7,15 @@ Nette Finder: Files Searching
 [![Latest Stable Version](https://poser.pugx.org/nette/finder/v/stable)](https://github.com/nette/finder/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/finder/blob/master/license.md)
 
-Class `Nette\Utils\Finder` makes browsing the directory structure really easy.
+Nette Finder makes browsing the directory structure really easy.
+
+Install it using Composer:
+
+```
+composer require nette/finder
+```
+
+The last stable release requires PHP version 5.6 or newer (is compatible with PHP 7.0 and 7.1). The dev-master version requires PHP 7.0.
 
 
 All examples assume the following class alias is defined:
