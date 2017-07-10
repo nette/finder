@@ -144,7 +144,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Converts Finder pattern to regular expression.
 	 * @param  array
-	 * @return string|NULL
+	 * @return string|null
 	 */
 	private static function buildPattern($masks)
 	{
@@ -156,7 +156,7 @@ class Finder implements \IteratorAggregate, \Countable
 				continue;
 
 			} elseif ($mask === '*') {
-				return NULL;
+				return null;
 
 			} elseif ($mask[0] === '/') { // absolute fixing
 				$mask = ltrim($mask, '/');
@@ -165,7 +165,7 @@ class Finder implements \IteratorAggregate, \Countable
 			$pattern[] = $prefix . strtr(preg_quote($mask, '#'),
 				['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
 		}
-		return $pattern ? '#/(' . implode('|', $pattern) . ')\z#i' : NULL;
+		return $pattern ? '#/(' . implode('|', $pattern) . ')\z#i' : null;
 	}
 
 
@@ -220,11 +220,11 @@ class Finder implements \IteratorAggregate, \Countable
 				if (!$file->isDot() && !$file->isFile()) {
 					foreach ($this->exclude as $filter) {
 						if (!call_user_func($filter, $file)) {
-							return FALSE;
+							return false;
 						}
 					}
 				}
-				return TRUE;
+				return true;
 			});
 		}
 
@@ -244,9 +244,9 @@ class Finder implements \IteratorAggregate, \Countable
 						continue 2;
 					}
 				}
-				return TRUE;
+				return true;
 			}
-			return FALSE;
+			return false;
 		});
 
 		return $iterator;
@@ -305,7 +305,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * @param  int
 	 * @return static
 	 */
-	public function size($operator, $size = NULL)
+	public function size($operator, $size = null)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?\z#i', $operator, $matches)) {
@@ -328,7 +328,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 * @param  mixed
 	 * @return static
 	 */
-	public function date($operator, $date = NULL)
+	public function date($operator, $date = null)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)\z#i', $operator, $matches)) {
