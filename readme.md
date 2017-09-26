@@ -7,26 +7,29 @@ Nette Finder: Files Searching
 [![Latest Stable Version](https://poser.pugx.org/nette/finder/v/stable)](https://github.com/nette/finder/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/finder/blob/master/license.md)
 
+
+Introduction
+------------
+
 Nette Finder makes browsing the directory structure really easy.
 
-Install it using Composer:
+Documentation can be found on the [website](https://doc.nette.org/finder).
+
+
+Installation
+------------
+
+The recommended way to install is via Composer:
 
 ```
 composer require nette/finder
 ```
 
-The last stable release requires PHP version 5.6 or newer (is compatible with PHP 7.0 and 7.1). The dev-master version requires PHP 7.0.
+It requires PHP version 5.6 and supports PHP up to 7.2. The dev-master version requires PHP 7.0.
 
 
-All examples assume the following class alias is defined:
-
-```php
-use Nette\Utils\Finder;
-```
-
-
-Searching for Files
--------------------
+Usage
+-----
 
 How to find all `*.txt` files in `$dir` directory without recursing subdirectories?
 
@@ -112,13 +115,13 @@ Depth of search can be limited using the `limitDepth()` method.
 
 
 Searching for directories
-----------------
+-------------------------
 
 In addition to files, it is possible to search for directories using `Finder::findDirectories('subdir*')`, or to search for files and directories: `Finder::find('file.txt')`.
 
 
 Filtering
-----------
+---------
 
 You can also filter results. For example by size. This way we will traverse the files of size between 100B and 200B:
 
@@ -159,7 +162,7 @@ foreach (Finder::findFiles('*')
 
 
 Connection to Amazon S3
-----------------------
+-----------------------
 
 It's possible to use custom streams, for example Zend_Service_Amazon_S3:
 
