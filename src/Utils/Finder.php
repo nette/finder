@@ -52,7 +52,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for files matching mask and all directories.
-	 * @param  mixed
+	 * @param  string|string[]  $masks
 	 * @return static
 	 */
 	public static function find(...$masks)
@@ -64,7 +64,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for files matching mask.
-	 * @param  mixed
+	 * @param  string|string[]  $masks
 	 * @return static
 	 */
 	public static function findFiles(...$masks)
@@ -76,7 +76,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for directories matching mask.
-	 * @param  mixed
+	 * @param  string|string[]  $masks
 	 * @return static
 	 */
 	public static function findDirectories(...$masks)
@@ -107,7 +107,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Searchs in the given folder(s).
-	 * @param  string|array
+	 * @param  string|string[]  $paths
 	 * @return static
 	 */
 	public function in(...$paths)
@@ -119,7 +119,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Searchs recursively from the given folder(s).
-	 * @param  string|array
+	 * @param  string|string[]  $paths
 	 * @return static
 	 */
 	public function from(...$paths)
@@ -257,7 +257,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Restricts the search using mask.
 	 * Excludes directories from recursive traversing.
-	 * @param  mixed
+	 * @param  string|string[]  $masks
 	 * @return static
 	 */
 	public function exclude(...$masks)
@@ -275,7 +275,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Restricts the search using callback.
-	 * @param  callable  function (RecursiveDirectoryIterator $file)
+	 * @param  callable  $callback  function (RecursiveDirectoryIterator $file)
 	 * @return static
 	 */
 	public function filter(callable $callback)
@@ -298,7 +298,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Restricts the search by size.
-	 * @param  string  "[operator] [size] [unit]" example: >=10kB
+	 * @param  string  $operator  "[operator] [size] [unit]" example: >=10kB
 	 * @return static
 	 */
 	public function size(string $operator, int $size = null)
@@ -320,8 +320,8 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Restricts the search by modified time.
-	 * @param  string  "[operator] [date]" example: >1978-01-23
-	 * @param  mixed
+	 * @param  string  $operator  "[operator] [date]" example: >1978-01-23
+	 * @param  string|int|\DateTimeInterface  $date
 	 * @return static
 	 */
 	public function date(string $operator, $date = null)
@@ -342,10 +342,8 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Compares two values.
-	 * @param  mixed
-	 * @param  mixed
 	 */
-	public static function compare($l, $operator, $r): bool
+	public static function compare($l, string $operator, $r): bool
 	{
 		switch ($operator) {
 			case '>':
