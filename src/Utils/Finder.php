@@ -314,7 +314,7 @@ class Finder implements \IteratorAggregate, \Countable
 			list(, $operator, $size, $unit) = $matches;
 			static $units = ['' => 1, 'k' => 1e3, 'm' => 1e6, 'g' => 1e9];
 			$size *= $units[strtolower($unit)];
-			$operator = $operator ? $operator : '=';
+			$operator = $operator ?: '=';
 		}
 		return $this->filter(function (RecursiveDirectoryIterator $file) use ($operator, $size) {
 			return self::compare($file->getSize(), $operator, $size);
@@ -335,7 +335,7 @@ class Finder implements \IteratorAggregate, \Countable
 				throw new Nette\InvalidArgumentException('Invalid date predicate format.');
 			}
 			list(, $operator, $date) = $matches;
-			$operator = $operator ? $operator : '=';
+			$operator = $operator ?: '=';
 		}
 		$date = DateTime::from($date)->format('U');
 		return $this->filter(function (RecursiveDirectoryIterator $file) use ($operator, $date) {
