@@ -106,7 +106,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 
 	/**
-	 * Searchs in the given folder(s).
+	 * Searches in the given folder(s).
 	 * @param  string|string[]  $paths
 	 * @return static
 	 */
@@ -118,7 +118,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 
 	/**
-	 * Searchs recursively from the given folder(s).
+	 * Searches recursively from the given folder(s).
 	 * @param  string|string[]  $paths
 	 * @return static
 	 */
