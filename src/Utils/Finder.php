@@ -196,11 +196,9 @@ class Finder implements \IteratorAggregate, \Countable
 
 		} else {
 			$iterator = new \AppendIterator();
-			$iterator->append($workaround = new \ArrayIterator(['workaround PHP bugs #49104, #63077']));
 			foreach ($this->paths as $path) {
 				$iterator->append($this->buildIterator((string) $path));
 			}
-			unset($workaround[0]);
 			return $iterator;
 		}
 	}
