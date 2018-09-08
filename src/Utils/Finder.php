@@ -91,13 +91,11 @@ class Finder implements \IteratorAggregate, \Countable
 	{
 		$this->cursor = &$this->groups[];
 		$pattern = self::buildPattern($masks);
-		if ($type || $pattern) {
-			$this->filter(function (RecursiveDirectoryIterator $file) use ($type, $pattern) {
-				return !$file->isDot()
-					&& (!$type || $file->$type())
-					&& (!$pattern || preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/')));
-			});
-		}
+		$this->filter(function (RecursiveDirectoryIterator $file) use ($type, $pattern) {
+			return !$file->isDot()
+				&& $file->$type()
+				&& (!$pattern || preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/')));
+		});
 		return $this;
 	}
 
