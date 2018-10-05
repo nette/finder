@@ -303,7 +303,7 @@ class Finder implements \IteratorAggregate, \Countable
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?\z#i', $operator, $matches)) {
 				throw new Nette\InvalidArgumentException('Invalid size predicate format.');
 			}
-			list(, $operator, $size, $unit) = $matches;
+			[, $operator, $size, $unit] = $matches;
 			static $units = ['' => 1, 'k' => 1e3, 'm' => 1e6, 'g' => 1e9];
 			$size *= $units[strtolower($unit)];
 			$operator = $operator ?: '=';
@@ -326,7 +326,7 @@ class Finder implements \IteratorAggregate, \Countable
 			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)\z#i', $operator, $matches)) {
 				throw new Nette\InvalidArgumentException('Invalid date predicate format.');
 			}
-			list(, $operator, $date) = $matches;
+			[, $operator, $date] = $matches;
 			$operator = $operator ?: '=';
 		}
 		$date = DateTime::from($date)->format('U');
