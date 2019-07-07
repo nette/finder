@@ -369,7 +369,7 @@ class Finder implements \IteratorAggregate, \Countable
 	{
 		return isset(self::$extMethods[$name])
 			? (self::$extMethods[$name])($this, ...$args)
-			: parent::__call($name, $args);
+			: Nette\Utils\ObjectHelpers::strictCall(get_class($this), $name, array_keys(self::$extMethods));
 	}
 
 
