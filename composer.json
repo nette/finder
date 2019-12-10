@@ -20,7 +20,8 @@
 	},
 	"require-dev": {
 		"nette/tester": "^2.0",
-		"tracy/tracy": "^2.3"
+		"tracy/tracy": "^2.3",
+		"phpstan/phpstan": "^0.12"
 	},
 	"conflict": {
 		"nette/nette": "<2.2"
@@ -29,6 +30,10 @@
 		"classmap": ["src/"]
 	},
 	"minimum-stability": "dev",
+	"scripts": {
+		"phpstan": "phpstan analyse --level 5 src",
+		"tester": "tester tests -s"
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "2.5-dev"
