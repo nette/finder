@@ -56,7 +56,7 @@ test(function () {
 
 
 test(function () { // date filter
-	$finder = Finder::findFiles('*')->date('> 2020-01-02')->from('files');
+	$finder = Finder::findFiles('*')->date('> 2050-01-02')->from('files');
 	Assert::same([], export($finder));
 });
 
