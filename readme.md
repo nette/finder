@@ -13,169 +13,142 @@ Introduction
 
 Nette Finder makes browsing the directory structure really easy.
 
-Documentation can be found on the [website](https://doc.nette.org/finder).
+Documentation can be found on the [website](https://doc.nette.org/finder). If you like it, **[please make a donation now](https://github.com/sponsors/dg)**. Thank you!
 
-If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
+Installation:
 
-
-Installation
-------------
-
-The recommended way to install is via Composer:
-
-```
+```shell
 composer require nette/finder
 ```
 
-It requires PHP version 7.1 and supports PHP up to 7.4.
-
-
-Usage
------
-
-How to find all `*.txt` files in `$dir` directory without recursing subdirectories?
+All examples assume the following class alias is defined:
 
 ```php
-foreach (Finder::findFiles('*.txt')->in($dir) as $key => $file) {
-	echo $key; // $key is a string containing absolute filename with path
-	echo $file; // $file is an instance of SplFileInfo
+use Nette\Utils\Finder;
+```
+
+
+Searching for Files
+-------------------
+
+How to find all `*.txt` files in `$dir` directory and all its subdirectories?
+
+```php
+foreach (Finder::findFiles('*.txt')->from($dir) as $key => $file) {
+	// $key is a string containing absolute filename with path
+	// $file is an instance of SplFileInfo
 }
 ```
 
-As a result, the finder returns instances of `SplFileInfo`.
+The files in the `$file` variable are instances of the `SplFileInfo` class.
 
-If the directory does not exist, an `UnexpectedValueException` is thrown.
+If the directory does not exist, an `Nette\UnexpectedValueException` is thrown.
 
-And what about searching for `*.txt` files in `$dir` including subdirectories? Instead of `in()`, use `from()`:
+And what about searching for files in a directory without subdirectories? Instead of `from()` use `in()`:
 
 ```php
-foreach (Finder::findFiles('*.txt')->from($dir) as $file) {
-	echo $file;
-}
+Finder::findFiles('*.txt')->in($dir)
 ```
 
-Search by more masks, even inside more directories within one iteration:
+Search by multiple masks and even multiple directories at once:
 
 ```php
-foreach (Finder::findFiles('*.txt', '*.php')
-	->in($dir1, $dir2) as $file) {
-	...
-}
+Finder::findFiles('*.txt', '*.php')
+	->in($dir1, $dir2) // or from($dir1, $dir2)
 ```
 
 Parameters can also be arrays:
 
 ```php
-foreach (Finder::findFiles($masks)->in($dirs) as $file) {
-	...
-}
-```
-
-Searching for `*.txt` files containing a number in the name:
-
-```php
-foreach (Finder::findFiles('*[0-9]*.txt')->from($dir) as $file) {
-	...
-}
-```
-
-Searching for `*.txt` files, except those containing '`X`' in the name:
-
-```php
-foreach (Finder::findFiles('*.txt')
-	->exclude('*X*')->from($dir) as $file) {
-	...
-}
-```
-
-`exclude()` is specified just after `findFiles()`, thus it applies to filename.
-
-
-Directories to omit can be specified using the `exclude` **after** `from` clause:
-
-```php
-foreach (Finder::findFiles('*.php')
-	->from($dir)->exclude('temp', '.git') as $file) {
-	...
-}
-```
-
-Here `exclude()` is after `from()`, thus it applies to the directory name.
-
-
-And now something a bit more complicated: searching for `*.txt` files located in subdirectories starting with '`te`', but not '`temp`':
-
-```php
-foreach (Finder::findFiles('te*/*.txt')
-	->exclude('temp*/*')->from($dir) as $file) {
-	...
-}
+Finder::findFiles(['*.txt', '*.php'])
+	->in([$dir1, $dir2]) // or from([$dir1, $dir2])
 ```
 
 Depth of search can be limited using the `limitDepth()` method.
 
 
-
-Searching for directories
+Searching for Directories
 -------------------------
 
-In addition to files, it is possible to search for directories using `Finder::findDirectories('subdir*')`, or to search for files and directories: `Finder::find('file.txt')`.
+In addition to files, it is possible to search for directories using `Finder::findDirectories('subdir*')`.
+
+Or to search for files and directories together using `Finder::find('*.txt')`, the mask in this case only applies to files. When searching recursively with `from()`, the subdirectory is returned first, followed by the files in it, which can be reversed with `childFirst()`.
+
+
+Mask
+----
+
+The mask does not have to describe only the file name, but also the path. Example: searching for `*.jpg` files located in a subdirectory starting with `imag`:
+
+```php
+Finder::findFiles('imag*/*.jpg')
+```
+
+Thus, the known wildcards `*` and `?` represent any characters except the directory separator `/`. The double `**` represents any characters, including the directory separator:
+
+```php
+Finder::findFiles('imag**/*.jpg')
+// finds also image/subdir/file.jpg
+```
+
+In addition you can use in the mask ranges `[...]` or negative ranges `[!...]` known from regular expressions. Searching for `*.txt` files containing a digit in the name:
+
+```php
+Finder::findFiles('*[0-9]*.txt')
+```
+
+
+Excluding
+---------
+
+Use `exclude()` to pass masks that the file must not match. Searching for `*.txt` files, except those containing '`X`' in the name:
+
+```php
+Finder::findFiles('*.txt')
+	->exclude('*X*')
+```
+
+If `exclude()` is specified **after** `from()`, it applies to crawled subdirectories:
+
+```php
+Finder::findFiles('*.php')
+	->from($dir)
+	->exclude('temp', '.git')
+```
+
 
 
 Filtering
 ---------
 
-You can also filter results. For example by size. This way we will traverse the files of size between 100B and 200B:
-
-
-```php
-foreach (Finder::findFiles('*.php')->size('>=', 100)->size('<=', 200)
-	->from($dir) as $file) {
-	...
-}
-```
-
-Or files changed in the last two weeks:
+You can also filter the results, for example by file size. Here's how to find files of size between 100 and 200 bytes:
 
 ```php
-foreach (Finder::findFiles('*.php')->date('>', '- 2 weeks')
-	->from($dir) as $file) {
-	...
-}
+Finder::findFiles('*.php')
+	->size('>=', 100)
+	->size('<=', 200)
+	->from($dir)
 ```
+
+Filtering by date of last change. Example: searching for files changed in the last two weeks:
+
+```php
+Finder::findFiles('*.php')
+	->date('>', '- 2 weeks')
+	->from($dir)
+```
+
+Both functions understand the operators `>`, `>=`, `<`, `<=`, `=`, `!=`.
 
 Here we traverse PHP files with number of lines greater than 1000. As a filter we use a custom callback:
 
 ```php
-$finder = Finder::findFiles('*.php')->filter(function($file) {
+$hasMoreThan100Lines = function (SplFileInfo $file): bool {
 	return count(file($file->getPathname())) > 1000;
-})->from($dir);
-```
+};
 
-
-Finder, find images larger than 50px × 50px:
-
-```php
-foreach (Finder::findFiles('*')
-	->dimensions('>50', '>50')->from($dir) as $file) {
-	...
-}
-```
-
-
-Connection to Amazon S3
------------------------
-
-It's possible to use custom streams, for example Zend_Service_Amazon_S3:
-
-```php
-$s3 = new Zend_Service_Amazon_S3($key, $secret);
-$s3->registerStreamWrapper('s3');
-
-foreach (Finder::findFiles('photos*')
-	->size('<=', 1e6)->in('s3://bucket-name') as $file) {
-	echo $file;
-}
+Finder::findFiles('*.php')
+	->filter($hasMoreThan100Lines)
 ```
 
 Handy, right? You will certainly find a use for Finder in your applications.
