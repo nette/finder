@@ -31,7 +31,6 @@ test('recursive', function () {
 		'files/subdir/subdir2/file.txt',
 	], export($finder));
 
-
 	$finder = Finder::find('*')->from(['files/subdir/subdir2', 'files/images']);
 	Assert::same([
 		'files/images/logo.gif',
@@ -50,7 +49,6 @@ test('non-recursive', function () {
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
 	], export($finder));
-
 
 	$finder = Finder::find('*')->in(['files/subdir/subdir2', 'files/images']);
 	Assert::same([
