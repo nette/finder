@@ -203,6 +203,15 @@ class Finder implements \IteratorAggregate, \Countable
 
 
 	/**
+	 * @return string[]
+	 */
+	public function findPaths(): array
+	{
+		return array_keys(iterator_to_array($this->getIterator()));
+	}
+
+
+	/**
 	 * Returns per-path iterator.
 	 */
 	private function buildIterator(string $path): \Iterator
