@@ -13,9 +13,21 @@ Introduction
 
 Nette Finder makes browsing the directory structure really easy.
 
-Documentation can be found on the [website](https://doc.nette.org/finder). If you like it, **[please make a donation now](https://github.com/sponsors/dg)**. Thank you!
+Documentation can be found on the [website](https://doc.nette.org/finder).
 
-Installation:
+
+[Support Me](https://github.com/sponsors/dg)
+--------------------------------------------
+
+Do you like Nette Finder? Are you looking forward to the new features?
+
+[![Buy me a coffee](https://files.nette.org/icons/donation-3.svg)](https://github.com/sponsors/dg)
+
+Thank you!
+
+
+Installation
+------------
 
 ```shell
 composer require nette/finder
