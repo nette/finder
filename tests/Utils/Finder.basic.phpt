@@ -48,7 +48,7 @@ test('recursive file search', function () {
 
 test('recursive file search and get paths', function () {
 	$finder = Finder::findFiles('file.txt')->from('files');
-	Assert::same([
+	Assert::equal([
 		'files/file.txt',
 		'files/subdir/file.txt',
 		'files/subdir/subdir2/file.txt',
