@@ -46,6 +46,20 @@ test('recursive file search', function () {
 });
 
 
+test('recursive file search and get paths', function () {
+	$finder = Finder::findFiles('file.txt')->from('files');
+	$pathList = $finder->getPaths();
+	$expectedList = [
+		'files/file.txt',
+		'files/subdir/file.txt',
+		'files/subdir/subdir2/file.txt',
+	];
+	sort($expectedList);
+	sort($pathList);
+	Assert::same($expectedList, $pathList);
+});
+
+
 test('recursive file search with depth limit', function () {
 	$finder = Finder::findFiles('file.txt')->from('files')->limitDepth(1);
 	Assert::same([
