@@ -116,7 +116,7 @@ test('getSubPathName', function () {
 	}
 	Assert::same(
 		['file.txt', 'subdir/file.txt', 'subdir/subdir2/file.txt'],
-		export($res)
+		export($res),
 	);
 });
 

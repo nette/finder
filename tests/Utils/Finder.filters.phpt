@@ -62,11 +62,7 @@ test('date filter', function () {
 
 
 test('custom filters', function () {
-	Finder::extensionMethod('length', function ($finder, $length) {
-		return $finder->filter(function ($file) use ($length) {
-			return strlen($file->getFilename()) == $length;
-		});
-	});
+	Finder::extensionMethod('length', fn($finder, $length) => $finder->filter(fn($file) => strlen($file->getFilename()) == $length));
 });
 
 
