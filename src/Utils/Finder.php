@@ -31,23 +31,19 @@ class Finder implements \IteratorAggregate, \Countable
 	/** @var callable  extension methods */
 	private static $extMethods = [];
 
-	/** @var array */
-	private $paths = [];
+	private array $paths = [];
 
-	/** @var array of filters */
-	private $groups = [];
+	/** filters */
+	private array $groups = [];
 
-	/** @var array filter for recursive traversing */
-	private $exclude = [];
+	/** filter for recursive traversing */
+	private array $exclude = [];
 
-	/** @var int */
-	private $order = RecursiveIteratorIterator::SELF_FIRST;
+	private int $order = RecursiveIteratorIterator::SELF_FIRST;
 
-	/** @var int */
-	private $maxDepth = -1;
+	private int $maxDepth = -1;
 
-	/** @var array */
-	private $cursor;
+	private ?array $cursor;
 
 
 	/**
