@@ -51,7 +51,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 
 	/**
-	 * Begins search for files matching mask and all directories.
+	 * Begins search for files and directories matching mask.
 	 * @param  string|string[]  $masks
 	 * @return static
 	 */
