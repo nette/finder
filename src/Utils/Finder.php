@@ -23,6 +23,8 @@ use RecursiveIteratorIterator;
  *     ->from('.')
  *     ->exclude('temp');
  * </code>
+ *
+ * @implements \IteratorAggregate<string, \SplFileInfo>
  */
 class Finder implements \IteratorAggregate, \Countable
 {
