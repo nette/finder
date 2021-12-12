@@ -19,6 +19,7 @@ function export($iterator)
 	foreach ($iterator as $key => $value) {
 		$arr[] = strtr($key, '\\', '/');
 	}
+
 	sort($arr);
 	return $arr;
 }
@@ -114,6 +115,7 @@ test('getSubPathName', function () {
 	foreach ($iterator = Finder::findFiles('file.txt')->from('files')->getIterator() as $foo) {
 		$res[$iterator->getSubPathName()] = true;
 	}
+
 	Assert::same(
 		['file.txt', 'subdir/file.txt', 'subdir/subdir2/file.txt'],
 		export($res)

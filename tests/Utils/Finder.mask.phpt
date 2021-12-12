@@ -19,6 +19,7 @@ function export($iterator)
 	foreach ($iterator as $key => $value) {
 		$arr[] = strtr($key, '\\', '/');
 	}
+
 	sort($arr);
 	return $arr;
 }
