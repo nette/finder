@@ -15,25 +15,9 @@
 		}
 	],
 	"require": {
-		"php": ">=7.1",
-		"nette/utils": "^2.4 || ^3.0"
-	},
-	"require-dev": {
-		"nette/tester": "^2.0",
-		"tracy/tracy": "^2.3",
-		"phpstan/phpstan": "^0.12"
-	},
-	"conflict": {
-		"nette/nette": "<2.2"
-	},
-	"autoload": {
-		"classmap": ["src/"]
+		"nette/utils": "^4.0"
 	},
 	"minimum-stability": "dev",
-	"scripts": {
-		"phpstan": "phpstan analyse",
-		"tester": "tester tests -s"
-	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3.0-dev"
