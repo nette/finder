@@ -59,7 +59,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function find(...$masks): self
 	{
-		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
 		return (new static)->select($masks, 'isDir')->select($masks, 'isFile');
 	}
 
@@ -71,7 +71,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function findFiles(...$masks): self
 	{
-		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
 		return (new static)->select($masks, 'isFile');
 	}
 
@@ -83,7 +83,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public static function findDirectories(...$masks): self
 	{
-		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
 		return (new static)->select($masks, 'isDir');
 	}
 
@@ -128,7 +128,7 @@ class Finder implements \IteratorAggregate, \Countable
 			throw new Nette\InvalidStateException('Directory to search has already been specified.');
 		}
 
-		$this->paths = is_array($paths[0]) ? $paths[0] : $paths;
+		$this->paths = is_array($tmp = reset($paths)) ? $tmp : $paths;
 		$this->cursor = &$this->exclude;
 		return $this;
 	}
@@ -267,7 +267,7 @@ class Finder implements \IteratorAggregate, \Countable
 	 */
 	public function exclude(...$masks): self
 	{
-		$masks = $masks && is_array($masks[0]) ? $masks[0] : $masks;
+		$masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
 		$pattern = self::buildPattern($masks);
 		if ($pattern) {
 			$this->filter(function (RecursiveDirectoryIterator $file) use ($pattern): bool {
