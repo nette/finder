@@ -69,13 +69,6 @@ Finder::findFiles('*.txt', '*.php')
 	->in($dir1, $dir2) // or from($dir1, $dir2)
 ```
 
-Parameters can also be arrays:
-
-```php
-Finder::findFiles(['*.txt', '*.php'])
-	->in([$dir1, $dir2]) // or from([$dir1, $dir2])
-```
-
 Depth of search can be limited using the `limitDepth()` method.
 
 
