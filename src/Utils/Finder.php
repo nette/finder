@@ -378,6 +378,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/********************* extension methods ****************d*g**/
 
 
+	/** @deprecated */
 	public function __call(string $name, array $args)
 	{
 		return isset(self::$extMethods[$name])
@@ -386,8 +387,10 @@ class Finder implements \IteratorAggregate, \Countable
 	}
 
 
+	/** @deprecated */
 	public static function extensionMethod(string $name, callable $callback): void
 	{
+		trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
 		self::$extMethods[$name] = $callback;
 	}
 }
