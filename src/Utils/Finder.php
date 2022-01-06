@@ -30,7 +30,7 @@ class Finder implements \IteratorAggregate, \Countable
 {
 	use Nette\SmartObject;
 
-	/** @var callable  extension methods */
+	/** @var callable[]  extension methods */
 	private static $extMethods = [];
 
 	/** @var array */
@@ -54,7 +54,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for files and directories matching mask.
-	 * @param  string|string[]  $masks
+	 * @param  string  ...$masks
 	 * @return static
 	 */
 	public static function find(...$masks): self
@@ -66,7 +66,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for files matching mask.
-	 * @param  string|string[]  $masks
+	 * @param  string  ...$masks
 	 * @return static
 	 */
 	public static function findFiles(...$masks): self
@@ -78,7 +78,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Begins search for directories matching mask.
-	 * @param  string|string[]  $masks
+	 * @param  string  ...$masks
 	 * @return static
 	 */
 	public static function findDirectories(...$masks): self
@@ -107,7 +107,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Searches in the given folder(s).
-	 * @param  string|string[]  $paths
+	 * @param  string  ...$paths
 	 * @return static
 	 */
 	public function in(...$paths): self
@@ -119,7 +119,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Searches recursively from the given folder(s).
-	 * @param  string|string[]  $paths
+	 * @param  string  ...$paths
 	 * @return static
 	 */
 	public function from(...$paths): self
@@ -262,7 +262,7 @@ class Finder implements \IteratorAggregate, \Countable
 	/**
 	 * Restricts the search using mask.
 	 * Excludes directories from recursive traversing.
-	 * @param  string|string[]  $masks
+	 * @param  string  ...$masks
 	 * @return static
 	 */
 	public function exclude(...$masks): self
@@ -281,7 +281,7 @@ class Finder implements \IteratorAggregate, \Countable
 
 	/**
 	 * Restricts the search using callback.
-	 * @param  callable  $callback  function (RecursiveDirectoryIterator $file): bool
+	 * @param  callable(RecursiveDirectoryIterator): bool  $callback
 	 * @return static
 	 */
 	public function filter(callable $callback): self
