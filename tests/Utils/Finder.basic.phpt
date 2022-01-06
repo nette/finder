@@ -13,14 +13,16 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 
-function export($iterator)
+function export($iterator, bool $sort = true)
 {
 	$arr = [];
 	foreach ($iterator as $key => $value) {
 		$arr[] = strtr($key, '\\', '/');
 	}
 
-	sort($arr);
+	if ($sort) {
+		sort($arr);
+	}
 	return $arr;
 }
 
@@ -75,12 +77,11 @@ test('recursive file & directory search', function () {
 
 
 test('recursive file & directory search in child-first order', function () {
-	$finder = Finder::find('file.txt')->from('files')->childFirst();
+	$finder = Finder::find('subdir*')->from('files')->childFirst();
 	Assert::same([
-		'files/file.txt',
-		'files/subdir/file.txt',
-		'files/subdir/subdir2/file.txt',
-	], export($finder));
+		'files/subdir/subdir2',
+		'files/subdir',
+	], export($finder, false));
 });
 
 
