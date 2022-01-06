@@ -29,7 +29,7 @@ function export($iterator, bool $sort = true)
 
 test('count the results', function () {
 	$finder = Finder::findFiles('file.txt')->in('files');
-	Assert::count(1, $finder);
+	@Assert::count(1, $finder); // is deprecated
 });
 
 

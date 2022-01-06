@@ -178,11 +178,10 @@ class Finder implements \IteratorAggregate, \Countable
 	/********************* iterator generator ****************d*g**/
 
 
-	/**
-	 * Get the number of found files and/or directories.
-	 */
+	/** @deprecated */
 	public function count(): int
 	{
+		trigger_error('Nette\Utils\Finder::count is deprecated.', E_USER_DEPRECATED);
 		return iterator_count($this->getIterator());
 	}
 
