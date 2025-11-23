@@ -1,5 +1,5 @@
-Nette Finder: Files Searching
-=============================
+Nette Finder: [DISCONTINUED]
+============================
 
 Nette Finder makes browsing the directory structure really easy.
 
